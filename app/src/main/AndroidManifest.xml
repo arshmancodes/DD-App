@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AddHomeItems"></activity>
+        <activity android:name=".AddHomeItems" />
         <activity android:name=".MarketActivity" />
         <activity android:name=".OfficeActivity" />
         <activity android:name=".HomeActivity" />
