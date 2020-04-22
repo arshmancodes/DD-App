@@ -3,6 +3,7 @@
     package="com.example.myapplication">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".DatabaseInfo"
@@ -12,7 +13,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MarketActivity"></activity>
+        <activity android:name=".HomeList"
+            android:parentActivityName=".HomeActivity"
+            android:label="Home List"/>
+        <activity android:name=".MarketActivity" />
         <activity android:name=".OfficeActivity" />
         <activity android:name=".HomeActivity" />
         <activity android:name=".SecondActivity" />
