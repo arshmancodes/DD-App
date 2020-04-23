@@ -13,13 +13,13 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class HomeListAdapter extends BaseAdapter {
+public class ListAdapter extends BaseAdapter {
 
     private Context context;
     private int layout;
     private ArrayList<HomeItem> homeItems;
 
-    public HomeListAdapter(Context context, int layout, ArrayList<HomeItem> homeItems) {
+    public ListAdapter(Context context, int layout, ArrayList<HomeItem> homeItems) {
         this.context = context;
         this.layout = layout;
         this.homeItems = homeItems;

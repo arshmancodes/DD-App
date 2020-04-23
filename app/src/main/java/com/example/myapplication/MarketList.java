@@ -7,7 +7,7 @@ import android.widget.GridView;
 
 import java.util.ArrayList;
 
-public class HomeList extends AppCompatActivity {
+public class MarketList extends AppCompatActivity {
 
     GridView gridView;
     ArrayList<HomeItem> list;
@@ -17,16 +17,16 @@ public class HomeList extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_list);
+        setContentView(R.layout.activity_market_list);
 
-        gridView = (GridView) findViewById(R.id.gridview);
+        gridView = (GridView) findViewById(R.id.gridviewmarket);
         list = new ArrayList<HomeItem>();
         adapter = new ListAdapter(this, R.layout.row_layout, list);
         gridView.setAdapter(adapter);
 
         //============Getting the data from SQLite===================
 
-        Cursor cursor = HomeActivity.sqLiteHelper.getData("SELECT * FROM HOME");
+        Cursor cursor = MarketActivity.sqLiteHelper.getData("SELECT * FROM MARKET");
         list.clear();
         while (cursor.moveToNext())
         {

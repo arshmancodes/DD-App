@@ -13,9 +13,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".HomeList"
-            android:parentActivityName=".HomeActivity"
-            android:label="Home List"/>
+        <activity android:name=".MarketList"></activity>
+        <activity android:name=".OfficeList" />
+        <activity
+            android:name=".HomeList"
+            android:label="Home List"
+            android:parentActivityName=".HomeActivity" />
         <activity android:name=".MarketActivity" />
         <activity android:name=".OfficeActivity" />
         <activity android:name=".HomeActivity" />

@@ -28,7 +28,7 @@ public class HomeActivity extends AppCompatActivity {
     Button add, view, upload;
     ImageView img;
 
-    final int REQUEST_CODE_FOOD = 999;
+    final int REQUEST_CODE_HOME = 999;
 
     public static SQLiteHelper sqLiteHelper;
 
@@ -48,7 +48,7 @@ public class HomeActivity extends AppCompatActivity {
                 ActivityCompat.requestPermissions(
                         HomeActivity.this,
                         new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                        REQUEST_CODE_FOOD
+                        REQUEST_CODE_HOME
                 );
             }
         });
@@ -58,7 +58,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 try {
-                    sqLiteHelper.insertData(
+                    sqLiteHelper.insertData("HOME",
                             name.getText().toString().trim(),
                             desc.getText().toString().trim(),
                             imageViewToByte(img)
@@ -97,13 +97,13 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
-        if(requestCode == REQUEST_CODE_FOOD)
+        if(requestCode == REQUEST_CODE_HOME)
         {
             if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
             {
                 Intent intent = new Intent(Intent.ACTION_PICK);
                 intent.setType("image/*");
-                startActivityForResult(intent, REQUEST_CODE_FOOD);
+                startActivityForResult(intent, REQUEST_CODE_HOME);
             }
             else
             {
@@ -116,7 +116,7 @@ public class HomeActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if(requestCode == REQUEST_CODE_FOOD && resultCode == RESULT_OK && data != null)
+        if(requestCode == REQUEST_CODE_HOME && resultCode == RESULT_OK && data != null)
         {
             Uri uri = data.getData();
 

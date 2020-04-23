@@ -17,10 +17,10 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         SQLiteDatabase database = getWritableDatabase();
         database.execSQL(sql);
     }
-    public void insertData(String name, String Text, byte[] image)
+    public void insertData(String iname,String name, String Text, byte[] image)
     {
         SQLiteDatabase database = getWritableDatabase();
-        String sql = "INSERT INTO HOME VALUES (NULL, ?, ?, ?)";
+        String sql = "INSERT INTO "+iname+" VALUES (NULL, ?, ?, ?)";
 
         SQLiteStatement statement = database.compileStatement(sql);
 
