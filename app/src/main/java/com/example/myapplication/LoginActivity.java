@@ -44,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
     private View mLoginFormView;
     private TextView tvLoad;
     private EditText user, pass;
-    private Button login;
+    private Button login, forgotPass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +56,7 @@ public class LoginActivity extends AppCompatActivity {
         tvLoad = findViewById(R.id.tvLoad);
         login = findViewById(R.id.pSign);
         user = findViewById(R.id.pUser);
+        forgotPass = findViewById(R.id.forgotPass);
         pass = findViewById(R.id.pPass);
         login = findViewById(R.id.pSign);
         TextView sign = (TextView) findViewById(R.id.signup);
@@ -77,6 +78,13 @@ public class LoginActivity extends AppCompatActivity {
                     loginUser(url);
 
                 }
+            }
+        });
+
+        forgotPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LoginActivity.this, ForgotPassword.class));
             }
         });
 
