@@ -3,22 +3,40 @@ package com.example.myapplication;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.backendless.Backendless;
 import com.backendless.BackendlessUser;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.persistence.local.UserIdStorageFactory;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -45,80 +63,22 @@ public class LoginActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (user.getText().toString().isEmpty() || pass.getText().toString().isEmpty())
-                {
-                    Toast.makeText(LoginActivity.this, "Please fill all the fields...", Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
-                    String username = user.getText().toString().trim();
-                    String password = pass.getText().toString().trim();
+                hideKeyBoard();
+                if(user.getText().toString().trim().equals("") || pass.getText().toString().trim().equals("")){
+                    Toast.makeText(LoginActivity.this, "Please enter your credentials first...", Toast.LENGTH_SHORT).show();
+                    user.setError("Required!");
+                    pass.setError("Required!");
+                }else{
+                    final String email = user.getText().toString().trim();
+                    final String password = pass.getText().toString().trim();
                     showProgress(true);
-                    Backendless.UserService.login(username, password, new AsyncCallback<BackendlessUser>() {
-                        @Override
-                        public void handleResponse(BackendlessUser response)
-                        {
-                            DatabaseInfo.user = response;
-                            showProgress(false);
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            startActivity(intent);
-                            LoginActivity.this.finish();
-                        }
 
-                        @Override
-                        public void handleFault(BackendlessFault fault) {
-                            Toast.makeText(LoginActivity.this, "Error :" + fault.getMessage(), Toast.LENGTH_SHORT).show();
-                            tvLoad.setText("Invalid Credentials..");
-                            showProgress(false);
-                        }
-                    }, true);
+                    String url = "https://noobistani.000webhostapp.com/DD%20app/user_login.php?user_email="+email+"&user_password="+password;
+                    loginUser(url);
+
                 }
-
             }
         });
-
-        tvLoad.setText("Checking Login Credentials... Please wait..");
-        Backendless.UserService.isValidLogin(new AsyncCallback<Boolean>() {
-            @Override
-            public void handleResponse(Boolean response) {
-                showProgress(true);
-                if (response)
-                {
-                    tvLoad.setText("Logging you in.. Please wait..");
-                    String userid = UserIdStorageFactory.instance().getStorage().get();
-
-                    Backendless.Data.of(BackendlessUser.class).findById(userid, new AsyncCallback<BackendlessUser>() {
-                        @Override
-                        public void handleResponse(BackendlessUser response) {
-                            DatabaseInfo.user = response;
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            startActivity(intent);
-                            LoginActivity.this.finish();
-                            showProgress(false);
-                        }
-
-                        @Override
-                        public void handleFault(BackendlessFault fault) {
-                            Toast.makeText(LoginActivity.this, "Error: " + fault.getMessage(), Toast.LENGTH_SHORT).show();
-                            showProgress(false);
-                        }
-                    });
-                }
-                else
-                {
-                    showProgress(false);
-                }
-
-            }
-
-            @Override
-            public void handleFault(BackendlessFault fault) {
-                Toast.makeText(LoginActivity.this, "Error: " + fault.getMessage(), Toast.LENGTH_SHORT).show();
-                tvLoad.setText("Invalid Credentials..");
-                showProgress(false);
-            }
-        });
-
 
     }
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
@@ -168,5 +128,96 @@ public class LoginActivity extends AppCompatActivity {
     {
         Intent intent = new Intent(LoginActivity.this, com.example.myapplication.RegisterActivity.class);
         startActivity(intent);
+    }
+    public void hideKeyBoard() {
+        try {
+            View view = this.getCurrentFocus();
+            if (view != null) {
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void loginUser(String url){
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                showProgress(false);
+                if (response.equals("0 results")) {
+                    Toast.makeText(LoginActivity.this, "Invalid Credentials!", Toast.LENGTH_SHORT).show();
+                    showProgress(false);
+                } else {
+                    Toast.makeText(LoginActivity.this, response, Toast.LENGTH_SHORT).show();
+                    // LOGIC FOR EXTRACTING USER DATA FROM LOGIN RESPONSE AND SETTING IT TO LOGGED IN USER OBJECT
+                    String substring = "";
+                    String[] data = new String[5];
+                    int count = 0;
+                    int counter = 0;
+                    for (int i = 0; i < response.length(); i++) {
+                        if (count > 0 && response.charAt(i) != ',') {
+                            substring = substring + response.charAt(i);
+                        }
+                        if (response.charAt(i) == ',' || i == response.length() - 1) {
+                            data[counter] = substring;
+                            counter++;
+                            count = 0;
+                            substring = "";
+                        } else if (response.charAt(i) == ':') {
+                            count++;
+                        }
+                    }
+                    // SAVING DATA IN SHARED PREFERENCES
+                    SharedPref.savePreferencesBoolean("isLoggedIn", true, LoginActivity.this);
+                    SharedPref.savePreferencesInt("user_id", Integer.parseInt(data[0]), LoginActivity.this);
+                    SharedPref.savePreferences("user_name", data[1], LoginActivity.this);
+                    SharedPref.savePreferences("user_email", data[2], LoginActivity.this);
+                    SharedPref.savePreferences("user_category", data[3], LoginActivity.this);
+
+                    Intent dashBoard = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(dashBoard);
+                    finish();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                showProgress(false);
+                if (error instanceof NetworkError) {
+                    Toast.makeText(LoginActivity.this, getString(R.string.Network_error), Toast.LENGTH_SHORT).show();
+                } else if (error instanceof ServerError) {
+                    Toast.makeText(LoginActivity.this, getString(R.string.Server_error_ksa), Toast.LENGTH_SHORT).show();
+                } else if (error instanceof AuthFailureError) {
+                    Toast.makeText(LoginActivity.this, getString(R.string.Auth_Failure_error), Toast.LENGTH_SHORT).show();
+                } else if (error instanceof ParseError) {
+                    Toast.makeText(LoginActivity.this, getString(R.string.Parse_error), Toast.LENGTH_SHORT).show();
+                } else if (error instanceof NoConnectionError) {
+                    Toast.makeText(LoginActivity.this, getString(R.string.Connection_error), Toast.LENGTH_SHORT).show();
+                } else if (error instanceof TimeoutError) {
+                    Toast.makeText(LoginActivity.this, getString(R.string.Timeout_error), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(LoginActivity.this, getString(R.string.Something_went_wrong_ksa), Toast.LENGTH_SHORT).show();
+                }
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                return params;
+            }
+        };
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                8000,
+                2,
+                2));
+
+        RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
+        queue.add(stringRequest);
     }
 }
