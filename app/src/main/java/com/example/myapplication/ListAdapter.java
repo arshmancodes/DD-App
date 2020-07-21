@@ -11,6 +11,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 public class ListAdapter extends BaseAdapter {
@@ -70,9 +72,12 @@ public class ListAdapter extends BaseAdapter {
 
 
        holder.name.setText(homeItem.getName());
-       byte[] homeimage = homeItem.getImage();
-      Bitmap bitmap = BitmapFactory.decodeByteArray(homeimage, 0, homeimage.length);
-      holder.img.setImageBitmap(bitmap);
+
+        Picasso.get().load(homeItem.getURL()).into(holder.img);
+
+//       byte[] homeimage = homeItem.getImage();
+//      Bitmap bitmap = BitmapFactory.decodeByteArray(homeimage, 0, homeimage.length);
+//      holder.img.setImageBitmap(bitmap);
 
         return view;
     }

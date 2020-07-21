@@ -2,14 +2,21 @@ package com.example.myapplication;
 
 public class HomeItem {
     private int id;
-    private String name, desc;
-    private byte[] image;
+    private String name, desc, URL;
 
-    public HomeItem(int id, String name, String desc, byte[] image) {
+    public HomeItem(int id, String name, String desc, String  URL) {
         this.id = id;
         this.name = name;
         this.desc = desc;
-        this.image = image;
+        this.URL = URL;
+    }
+
+    public String getURL() {
+        return URL;
+    }
+
+    public void setURL(String URL) {
+        this.URL = URL;
     }
 
     public int getId() {
@@ -36,11 +43,4 @@ public class HomeItem {
         this.desc = desc;
     }
 
-    public byte[] getImage() {
-        return image;
-    }
-
-    public void setImage(byte[] image) {
-        this.image = image;
-    }
 }
