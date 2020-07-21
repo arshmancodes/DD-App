@@ -57,11 +57,11 @@
         >
 
         <Button
+            android:id="@+id/marketadditem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add Item"
             android:layout_marginRight="20dp"
-            android:id="@+id/marketadditem"/>
+            android:text="Add Item" />
 
         <Button
             android:layout_width="wrap_content"

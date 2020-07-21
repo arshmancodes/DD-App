@@ -26,17 +26,17 @@ public class HomeList extends AppCompatActivity {
 
         //============Getting the data from SQLite===================
 
-        Cursor cursor = HomeActivity.sqLiteHelper.getData("SELECT * FROM HOME");
-        list.clear();
-        while (cursor.moveToNext())
-        {
-            int id = cursor.getInt(0);
-            String name = cursor.getString(1);
-            String desc = cursor.getString(2);
-            byte[] image = cursor.getBlob(3);
-
-            list.add(new HomeItem(id, name, desc, image));
-        }
-        adapter.notifyDataSetChanged();
+//        Cursor cursor = HomeActivity.sqLiteHelper.getData("SELECT * FROM HOME");
+//        list.clear();
+//        while (cursor.moveToNext())
+//        {
+//            int id = cursor.getInt(0);
+//            String name = cursor.getString(1);
+//            String desc = cursor.getString(2);
+//            byte[] image = cursor.getBlob(3);
+//
+//            list.add(new HomeItem(id, name, desc, image));
+//        }
+//        adapter.notifyDataSetChanged();
     }
 }
