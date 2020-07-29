@@ -4,13 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="40dp"
+    android:background="@drawable/ic_bgmain"
+    android:padding="40dp"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
         android:text="Welcome to DD Application"
         android:textStyle="bold"
         android:textSize="20sp"
@@ -24,41 +26,41 @@
         android:textStyle="italic"
         android:gravity="center" />
 
-    <TextView
+
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="The interfaces a DD can access are the follows:"
-        android:textSize="15sp" />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="40dp"
-        android:layout_gravity="center">
-
+        android:src="@drawable/ic_work_places"
+        android:layout_gravity="center"
+        android:layout_marginTop="40dp" />
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    >
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryLight"
-        android:id="@+id/home"
-        android:text="Home" />
+        android:background="@drawable/ic_homebtn"
+        android:layout_marginTop="10dp"
+        android:id="@+id/home" />
 
         <Button
             android:layout_width="wrap_content"
-            android:background="@color/colorPrimary"
+            android:background="@drawable/ic_workbtn"
             android:layout_height="wrap_content"
-            android:id="@+id/office"
-            android:text="Office" />
+            android:layout_marginTop="10dp"
+            android:id="@+id/office" />
 
         <Button
             android:layout_width="wrap_content"
-            android:background="@color/colorPrimaryLight"
+            android:background="@drawable/ic_marketbtn"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:id="@+id/market"
-            android:text="Market" />
-    </LinearLayout>
-
+            />
+</LinearLayout>
     <Button
         android:layout_width="200dp"
         android:layout_height="wrap_content"

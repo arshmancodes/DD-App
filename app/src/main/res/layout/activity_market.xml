@@ -5,7 +5,35 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent"
+    android:background="@drawable/ic_bgreg"
     tools:context=".MarketActivity">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:layout_gravity="center"
+        android:orientation="horizontal"
+        >
+
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="40dp"
+            android:src="@mipmap/ic_launcher"
+            android:id="@+id/marketimg"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="75dp"
+            android:text="Upload Image"
+            android:id="@+id/marketuploadbtn"
+            />
+    </LinearLayout>
 
     <EditText
         android:layout_width="300dp"
@@ -23,29 +51,7 @@
         android:id="@+id/marketitemtext"
         android:inputType="text"/>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
 
-        <ImageView
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="40dp"
-            android:src="@mipmap/ic_launcher"
-            android:id="@+id/marketimg"/>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="40dp"
-            android:text="Upload Image"
-            android:id="@+id/marketuploadbtn"
-            />
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
